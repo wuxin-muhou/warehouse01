@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 画布标签 -->
+    <canvas id="canvas"></canvas>
+    <script>
+        // 1.0 画布标签
+        var canvas = document.getElementById("canvas");
+        // 2.0 定义画布大小
+        var winWidth = window.innerWidth;
+        var winHeight = window.innerHeight;
+        // 3.0 设置画布大小
+        canvas.width = winWidth;
+        canvas.height = winHeight;
+        // .0 获取绘图的环境
+        var ctx = canvas.getContext("2d");
+        // 4.0 绘制矩形函数
+        var drawRect = function(x, y, w, h, color){
+            // .0 处理绘制矩形的逻辑
+            ctx.beginPath();
+            ctx.fillStyle = color || "red";
+            ctx.fillRect(x, y, w, h);
+            ctx.closePath();
+        }
+
+        // 5.0 定义变量 记录岁需要的参数
+        var x = winWidth * (1/10); // x轴的位置
+        var y = 0; // y轴的位置
+        drawRect(x, y, 10, 40, "red");
+        // 6.0 定义动画函数(目标位置 = 当前位置 + 步长)
+        var vy = 10;
+        var move = function(){
+            // .0 改变y轴的位置
+            y += vy;
+            // .0 判断(y位置是否大于可视去高度) 重置y值
+            if(y > winHeight){
+                y = 0;
+                x = Math.floor(Math.random()*winWidth);
+            }
+            // .0 清空画布
+            ctx.clearRect(0, 0, winWidth, winHeight);
+            // .0绘制矩形
+            drawRect(x, y, 10, 40, "red");
+            // .0 设置矩形不断运动
+            window.requestAnimationFrame(move);
+        }
+        // 7.0 执行动画函数
+        move();
+    </script>
+</body>
+</html>
